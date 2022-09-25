@@ -1,15 +1,14 @@
-import {helpHttp} from "../herpers/helpHttp"
-import React, { useState} from "react";
+import { helpHttp } from "../herpers/helpHttp";
+import React, { useState } from "react";
 import Button from "../commons/Button";
 import Nav from "../commons/Nav";
 import Loader from "./Loader";
-
 
 const initialState = {
   mes: "",
   municipio: "",
   year: "",
-  fecha:"",
+  fecha: "",
   factorClimatico: "",
   factorGeologico: "",
   nivelCauce: "",
@@ -17,8 +16,8 @@ const initialState = {
   volumen: "",
   coberturaForestal: "",
   demanda: "",
-  resultado:1.7,
-  idUser:2
+  resultado: 1.7,
+  idUser: 2,
 };
 
 // =('Factor B4climatico'!N2*0.16)+('Factor geológico'!N2*0.13)+('Nivel del cauce'!N2*0.13)+('Nivel Aguas Subterráneas'!N2*0.15)+('Volumen de los embalses'!N2*0.17)+('Cobertura forestal'!N2*0.12)+('Demanda disponibilidad'!N2*0.14)
@@ -34,34 +33,60 @@ const Form = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
- 
-  const addReport = (data)=>{
-       try {
-        let url = "http://localhost:5500/new-report";
-        let options = {
-          body: data,
-          headers: { "Content-type": "application/json" },
-        };
-       setIsLoading(true);
-       helpHttp().post(url,options).then(res=>{
-       
-        setIsLoading(false)
-        setMessage(res.statusText)
-       })
-       
-        
-       } catch (error) {
-        console.log(error)
-       }
-       
-  }
-  
+  const addReport = (data) => {
+    try {
+      let url = "http://localhost:5500/new-report";
+      let options = {
+        body: data,
+        headers: { "Content-type": "application/json" },
+      };
+      setIsLoading(true);
+      helpHttp()
+        .post(url, options)
+        .then((res) => {
+          setIsLoading(false);
+          setMessage(res.statusText);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const calcResult = (data) => {
+    let result;
+    const {
+      demanda,
+      factorClimatico,
+      factorGeologico,
+      nivelAguaSubTerranea,
+      nivelCauce,
+      volumen,
+      coberturaForestal,
+    } = data;
+    result =
+      factorClimatico * 0.16 +
+      factorGeologico * 0.13 +
+      nivelCauce * 0.13 +
+      nivelAguaSubTerranea * 0.15 +
+      volumen * 0.17 +
+      coberturaForestal * 0.12 +
+      demanda * 0.14;
+    return result;
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    addReport({...form, fecha:new Date().toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})})
+    addReport({
+      ...form,
+      resultado: calcResult(form),
+      fecha: new Date().toLocaleDateString("en-us", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+    });
     setForm(initialState);
-    setTimeout(()=>{setMessage(null)},2000)
-    
+    setTimeout(() => {
+      setMessage(null);
+    }, 2000);
   };
 
   return (
@@ -142,8 +167,12 @@ const Form = () => {
           <div className="form__data-second-group">
             <div className="form__data-item-2">
               <label htmlFor="factorClimatico">Factor Climatico</label>
-              <select id="factorClimatico" name="factorClimatico" value={form.factorClimatico}
-                onChange={(e) => handleChange(e)}>
+              <select
+                id="factorClimatico"
+                name="factorClimatico"
+                value={form.factorClimatico}
+                onChange={(e) => handleChange(e)}
+              >
                 <option value="">Escoja..</option>
                 <option value="1">1</option>
                 <option value="5">5</option>
@@ -152,8 +181,12 @@ const Form = () => {
             </div>
             <div className="form__data-item-2">
               <label htmlFor="factorGeologico">Factor Geologico</label>
-              <select id="factorGeologico" name="factorGeologico" value={form.factorGeologico}
-                onChange={(e) => handleChange(e)}>
+              <select
+                id="factorGeologico"
+                name="factorGeologico"
+                value={form.factorGeologico}
+                onChange={(e) => handleChange(e)}
+              >
                 <option value="">Escoja..</option>
                 <option value="1">1</option>
                 <option value="5">5</option>
@@ -162,8 +195,12 @@ const Form = () => {
             </div>
             <div className="form__data-item-2">
               <label htmlFor="nivelCauce">Nivel del cauce</label>
-              <select id="nivelCauce" name="nivelCauce" value={form.nivelCauce}
-                onChange={(e) => handleChange(e)}>
+              <select
+                id="nivelCauce"
+                name="nivelCauce"
+                value={form.nivelCauce}
+                onChange={(e) => handleChange(e)}
+              >
                 <option value="">Escoja..</option>
                 <option value="1">1</option>
                 <option value="5">5</option>
@@ -172,8 +209,12 @@ const Form = () => {
             </div>
             <div className="form__data-item-2">
               <label htmlFor="nivelAguaSubTerranea">Nivel de Agua</label>
-              <select id="nivelAguaSubTerranea" name="nivelAguaSubTerranea" value={form.nivelAguaSubTerranea}
-                onChange={(e) => handleChange(e)}>
+              <select
+                id="nivelAguaSubTerranea"
+                name="nivelAguaSubTerranea"
+                value={form.nivelAguaSubTerranea}
+                onChange={(e) => handleChange(e)}
+              >
                 <option value="">Escoja</option>
                 <option value="1">1</option>
                 <option value="5">5</option>
@@ -182,7 +223,12 @@ const Form = () => {
             </div>
             <div className="form__data-item-2">
               <label htmlFor="volumen">Volumen</label>
-              <select id="volumen" name="volumen" onChange={(e)=> handleChange(e)} value={form.volumen} >
+              <select
+                id="volumen"
+                name="volumen"
+                onChange={(e) => handleChange(e)}
+                value={form.volumen}
+              >
                 <option value="">Escoja..</option>
                 <option value="1">1</option>
                 <option value="5">5</option>
@@ -191,7 +237,12 @@ const Form = () => {
             </div>
             <div className="form__data-item-2">
               <label htmlFor="coberturaForestal">Cobertura Forestal </label>
-              <select id="coberturaForestal" name="coberturaForestal" onChange={(e)=> handleChange(e)} value={form.coberturaForestal}>
+              <select
+                id="coberturaForestal"
+                name="coberturaForestal"
+                onChange={(e) => handleChange(e)}
+                value={form.coberturaForestal}
+              >
                 <option value="">Escoja..</option>
                 <option value="1">1</option>
                 <option value="5">5</option>
@@ -200,7 +251,12 @@ const Form = () => {
             </div>
             <div className="form__data-item-2">
               <label htmlFor="demanda">Demanda </label>
-              <select id="demanda" name="demanda" onChange={(e)=> handleChange(e)} value={form.demanda} >
+              <select
+                id="demanda"
+                name="demanda"
+                onChange={(e) => handleChange(e)}
+                value={form.demanda}
+              >
                 <option value="">Escoja..</option>
                 <option value="1">1</option>
                 <option value="5">5</option>
@@ -209,10 +265,9 @@ const Form = () => {
             </div>
           </div>
           <Button text="Guardar" />
-        
         </form>
-          {isLoading && <Loader/>}
-          {message && <p className="message">{message}</p>}
+        {isLoading && <Loader />}
+        {message && <p className="message">{message}</p>}
       </div>
     </>
   );

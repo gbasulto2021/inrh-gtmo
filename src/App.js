@@ -5,8 +5,12 @@ import {Routes, Route} from 'react-router-dom'
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Form from './components/Form';
+import Chart from './components/Chart';
 
 function App() {
+ 
+ 
+
   return (
     <div className="App">
       <Routes>
@@ -14,6 +18,7 @@ function App() {
          <Route path="login" element={<Login/>}/>
          <Route path="dashboard" element={<Dashboard/>}/>
          <Route path="form" element={<Form/>}/>
+         <Route path="report" element={<Chart/>}/>
       </Routes>
    
     </div>

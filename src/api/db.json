@@ -1,41 +1,31 @@
-
-
 {
-  "mes": [
-    {
-      "id": 1,
-      "name": "Seiya"
-      
-    },
-    {
-      "id": 2,
-      "name": "Shiryu",
-      "constellation": "Dragón"
-    },
-    {
-      "id": 3,
-      "name": "Hyoga",
-      "constellation": "Cisne"
-    },
-    {
-      "id": 4,
-      "name": "Shun",
-      "constellation": "Andrómeda"
-    },
-    {
-      "id": 5,
-      "name": "Ikki",
-      "constellation": "Fénix"
-    },
-    {
-      "name": "Mu",
-      "constellation": "Aries",
-      "id": 1626033494020
-    },
-    {
-      "name": "Saga",
-      "constellation": "Geminis",
-      "id": 1626033815933
-    }
-  ]
+ "2022": [
+  {"mes": "Enero", "resultado":"1.4"},
+  {"mes": "Febrero", "resultado":"7"},
+  {"mes": "Marzo", "resultado":"4"},
+  {"mes": "Abril", "resultado":"2.4"},
+  {"mes": "Mayo", "resultado":"3.6"},
+  {"mes": "Junio", "resultado":"6.3"},
+  {"mes": "Julio", "resultado":"1.2"},
+  {"mes": "Agosto", "resultado":"8.4"},
+  {"mes": "Septiembre", "resultado":"6.1"},
+  {"mes": "Octubre", "resultado":"3.4"},
+  {"mes": "Noviembre", "resultado":"1.5"},
+  {"mes": "Diciembre", "resultado":"9"}
+ ],
+ "2021": [
+  {"mes": "Enero", "resultado":"1.4"},
+  {"mes": "Febrero", "resultado":"7"},
+  {"mes": "Marzo", "resultado":"4"},
+  {"mes": "Abril", "resultado":"2.4"},
+  {"mes": "Mayo", "resultado":"3.6"},
+  {"mes": "Junio", "resultado":"6.3"},
+  {"mes": "Julio", "resultado":"1.2"},
+  {"mes": "Agosto", "resultado":"8.4"},
+  {"mes": "Septiembre", "resultado":"6.1"},
+  {"mes": "Octubre", "resultado":"3.4"},
+  {"mes": "Noviembre", "resultado":"1.5"},
+  {"mes": "Diciembre", "resultado":"9"}
+ ]
 }
+
