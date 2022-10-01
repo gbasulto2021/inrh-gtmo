@@ -16,8 +16,8 @@ const initialState = {
   volumen: "",
   coberturaForestal: "",
   demanda: "",
-  resultado: 1.7,
-  idUser: 2,
+  resultado: "",
+  idUser: "",
 };
 
 // =('Factor B4climatico'!N2*0.16)+('Factor geológico'!N2*0.13)+('Nivel del cauce'!N2*0.13)+('Nivel Aguas Subterráneas'!N2*0.15)+('Volumen de los embalses'!N2*0.17)+('Cobertura forestal'!N2*0.12)+('Demanda disponibilidad'!N2*0.14)
@@ -25,6 +25,7 @@ const Form = () => {
   const [form, setForm] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const [errors, setErrors] = useState({});
   const years = (cb) => {
     return cb();
   };
@@ -33,24 +34,25 @@ const Form = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const addReport = (data) => {
+  const addReport = async (data) => {
     try {
       let url = "http://localhost:5500/new-report";
       let options = {
-        body: data,
+        method:"POST",
+        body: JSON.stringify(data),
         headers: { "Content-type": "application/json" },
       };
       setIsLoading(true);
-      helpHttp()
-        .post(url, options)
-        .then((res) => {
-          setIsLoading(false);
-          setMessage(res.statusText);
-        });
+      const response = await fetch(url,options)
+      const json = response.json()
+      setIsLoading(false)
+          
+      return json  
     } catch (error) {
       console.log(error);
     }
   };
+
   const calcResult = (data) => {
     let result;
     const {
@@ -77,12 +79,15 @@ const Form = () => {
     addReport({
       ...form,
       resultado: calcResult(form),
-      fecha: new Date().toLocaleDateString("en-us", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
-    });
+      idUser: JSON.parse(localStorage.getItem("user")).id_user
+    }).then(res=> {
+      if(res.ok){
+        setMessage(res.statusText)
+      }else{
+        setErrors(res.errors)
+      }
+      
+    })
     setForm(initialState);
     setTimeout(() => {
       setMessage(null);
@@ -95,51 +100,7 @@ const Form = () => {
       <div className="form">
         <form className="form__data" onSubmit={handleSubmit}>
           <div className="form__data-first-group">
-            <div className="form__data-item">
-              <label htmlFor="mes">Mes</label>
-
-              <select
-                id="mes"
-                name="mes"
-                value={form.mes}
-                onChange={(e) => handleChange(e)}
-              >
-                <option value="">Escoja..</option>
-                <option value="Enero">Enero</option>
-                <option value="Febrero">Febrero</option>
-                <option value="Marzo">Marzo</option>
-                <option value="Abril">Abril</option>
-                <option value="Mayo">Mayo</option>
-                <option value="Junio">Junio</option>
-                <option value="Julio">Julio</option>
-                <option value="Agosto">Agosto</option>
-                <option value="Septiembre">Septiembre</option>
-                <option value="Octubre">Octubre</option>
-                <option value="Noviembre">Noviembre</option>
-                <option value="Diciembre">Diciembre</option>
-              </select>
-            </div>
-            <div className="form__data-item">
-              <label htmlFor="municipio">Municipio</label>
-              <select
-                id="municipio"
-                name="municipio"
-                value={form.municipio}
-                onChange={(e) => handleChange(e)}
-              >
-                <option value="">Escoja..</option>
-                <option value="mias">Imias</option>
-                <option value="Baracoa">Baracoa</option>
-                <option value="San Antonio del Sur">San Antonio del Sur</option>
-                <option value="Manuel Tames">Manuel Tames</option>
-                <option value="El Salvador">El Salvador</option>
-                <option value="Maisi">Maisi</option>
-                <option value="Niceto Perez">Niceto Perez</option>
-                <option value="Yateras">Yateras</option>
-                <option value="Guantanamo">Guantanamo</option>
-                <option value="Caimanera">Caimanera</option>
-              </select>
-            </div>
+            
             <div className="form__data-item">
               <label htmlFor="year">Año</label>
               <select
@@ -165,6 +126,51 @@ const Form = () => {
             </div>
           </div>
           <div className="form__data-second-group">
+          <div className="form__data-item-2">
+              <label htmlFor="mes">Mes</label>
+
+              <select
+                id="mes"
+                name="mes"
+                value={form.mes}
+                onChange={(e) => handleChange(e)}
+              >
+                <option value="">Escoja..</option>
+                <option value="Enero">Enero</option>
+                <option value="Febrero">Febrero</option>
+                <option value="Marzo">Marzo</option>
+                <option value="Abril">Abril</option>
+                <option value="Mayo">Mayo</option>
+                <option value="Junio">Junio</option>
+                <option value="Julio">Julio</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Septiembre">Septiembre</option>
+                <option value="Octubre">Octubre</option>
+                <option value="Noviembre">Noviembre</option>
+                <option value="Diciembre">Diciembre</option>
+              </select>
+            </div>
+            <div className="form__data-item-2">
+              <label htmlFor="municipio">Municipio</label>
+              <select
+                id="municipio"
+                name="municipio"
+                value={form.municipio}
+                onChange={(e) => handleChange(e)}
+              >
+                <option value="">Escoja..</option>
+                <option value="mias">Imias</option>
+                <option value="Baracoa">Baracoa</option>
+                <option value="San Antonio del Sur">San Antonio del Sur</option>
+                <option value="Manuel Tames">Manuel Tames</option>
+                <option value="El Salvador">El Salvador</option>
+                <option value="Maisi">Maisi</option>
+                <option value="Niceto Perez">Niceto Perez</option>
+                <option value="Yateras">Yateras</option>
+                <option value="Guantanamo">Guantanamo</option>
+                <option value="Caimanera">Caimanera</option>
+              </select>
+            </div>
             <div className="form__data-item-2">
               <label htmlFor="factorClimatico">Factor Climatico</label>
               <select
@@ -263,8 +269,11 @@ const Form = () => {
                 <option value="10">10</option>
               </select>
             </div>
+            <div className="form__data-item-2 form-btn">
+            <Button text="Guardar" />
+            </div>
           </div>
-          <Button text="Guardar" />
+          
         </form>
         {isLoading && <Loader />}
         {message && <p className="message">{message}</p>}

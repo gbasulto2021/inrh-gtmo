@@ -356,10 +356,8 @@
     font-weight: bold;
     letter-spacing: 1px;
     cursor: pointer;
-     margin-top: 20px;
-     margin-left: 10px;
-     background-color: #0413499e;
-     width: 200px;
+    background-color: #0413499e;
+     width: 100%;
      height: 40px;
      border: none;
      border-radius: 10px;
@@ -378,8 +376,9 @@
   }
 
   .form__data{
-    height: 300px;
-    width: 100%;
+    margin-top: 200px;
+    width: 80%;
+    max-width: 1024px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -399,19 +398,21 @@
     
   }
   .form__data-second-group{
+    
     margin-top: 30px;
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 250px)) ;
-    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 250px)) ;
     gap: 10px;
-   
-    
+    width: 100%;  
   }
 
   .form__data-item-2{
+    height: 40px;
+    min-width: 150px;
     padding-left: 35px;
     display: flex;
+    align-items: center;
     justify-content:space-between;
     color:#c2dbec;
     font-weight: bold;
@@ -506,3 +507,18 @@
   .report_btn:hover{
     background-color:#a1cfed;
   }
+
+  @media  screen and (min-width: 992px ) {
+    .form-btn{
+       grid-column: 1 / span 3;
+       justify-content: center;
+    }
+    .btn{
+      width: 200px;
+    }
+    .form__data{
+      margin-top: 100px;
+     
+    }
+  }
+
