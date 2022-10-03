@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Home from './components/Home';
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, Navigate} from 'react-router-dom'
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Form from './components/Form';
@@ -17,6 +17,7 @@ function App() {
          <Route path="dashboard" element={<Dashboard/>}/>
          <Route path="form" element={<Form/>}/>
          <Route path="report" element={<Chart/>}/>
+         {/* <Route path='*' element={<Navigate to="/"/>}/> */}
       </Routes>
    
     </div>

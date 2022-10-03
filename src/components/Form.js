@@ -1,8 +1,10 @@
-import { helpHttp } from "../herpers/helpHttp";
+
 import React, { useState } from "react";
 import Button from "../commons/Button";
 import Nav from "../commons/Nav";
 import Loader from "./Loader";
+import { useNavigate} from "react-router-dom";
+import {years} from "../herpers/years";
 
 const initialState = {
   mes: "",
@@ -25,10 +27,12 @@ const Form = () => {
   const [form, setForm] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  const [errors, setErrors] = useState({});
-  const years = (cb) => {
-    return cb();
-  };
+  const [errors, setErrors] = useState(null);
+  const navigate = useNavigate();
+
+  // const years = (cb) => {
+  //   return cb();
+  // };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -44,7 +48,7 @@ const Form = () => {
       };
       setIsLoading(true);
       const response = await fetch(url,options)
-      const json = response.json()
+      const json = await response.json()
       setIsLoading(false)
           
       return json  
@@ -83,16 +87,26 @@ const Form = () => {
     }).then(res=> {
       if(res.ok){
         setMessage(res.statusText)
+        setForm(initialState);
+        navigate('/dashboard')
       }else{
         setErrors(res.errors)
       }
       
     })
-    setForm(initialState);
+    
     setTimeout(() => {
       setMessage(null);
     }, 2000);
   };
+
+  const isError = (param)=>{
+    if(errors){
+      return errors.some(error=> error.param == param)
+    }
+  }
+
+ 
 
   return (
     <>
@@ -110,19 +124,10 @@ const Form = () => {
                 onChange={(e) => handleChange(e)}
               >
                 <option value="">Escoja..</option>
-                {years(() => {
-                  const arrOfYears = [];
-                  for (let i = 1959; i <= 2022; i++) {
-                    arrOfYears.push(i);
-                  }
-                  return arrOfYears.map((year, index) => (
-                    <option key={index} value={year}>
-                      {year}
-                    </option>
-                  ));
-                })}
+                {years()}
                 {/* {years && years.length > 0 ? years.map((el, index)=> <option key={index} value={el}>{el}</option>): <option value="2022">2022</option> } */}
               </select>
+              <span className={`form-text-error ${isError("year")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
           </div>
           <div className="form__data-second-group">
@@ -149,6 +154,7 @@ const Form = () => {
                 <option value="Noviembre">Noviembre</option>
                 <option value="Diciembre">Diciembre</option>
               </select>
+              <span className={`form-text-error ${isError("mes")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="municipio">Municipio</label>
@@ -170,6 +176,7 @@ const Form = () => {
                 <option value="Guantanamo">Guantanamo</option>
                 <option value="Caimanera">Caimanera</option>
               </select>
+              <span className={`form-text-error ${isError("municipio")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="factorClimatico">Factor Climatico</label>
@@ -184,6 +191,7 @@ const Form = () => {
                 <option value="5">5</option>
                 <option value="10">10</option>
               </select>
+              <span className={`form-text-error ${isError("factorClimatico")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="factorGeologico">Factor Geologico</label>
@@ -198,6 +206,7 @@ const Form = () => {
                 <option value="5">5</option>
                 <option value="10">10</option>
               </select>
+              <span className={`form-text-error ${isError("factorGeologico")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="nivelCauce">Nivel del cauce</label>
@@ -212,6 +221,7 @@ const Form = () => {
                 <option value="5">5</option>
                 <option value="10">10</option>
               </select>
+              <span className={`form-text-error ${isError("nivelCauce")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="nivelAguaSubTerranea">Nivel de Agua</label>
@@ -226,6 +236,7 @@ const Form = () => {
                 <option value="5">5</option>
                 <option value="10">10</option>
               </select>
+              <span className={`form-text-error ${isError("nivelAguaSubTerranea")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="volumen">Volumen</label>
@@ -240,6 +251,7 @@ const Form = () => {
                 <option value="5">5</option>
                 <option value="10">10</option>
               </select>
+              <span className={`form-text-error ${isError("volumen")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="coberturaForestal">Cobertura Forestal </label>
@@ -254,6 +266,7 @@ const Form = () => {
                 <option value="5">5</option>
                 <option value="10">10</option>
               </select>
+              <span className={`form-text-error ${isError("coberturaForestal")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2">
               <label htmlFor="demanda">Demanda </label>
@@ -268,6 +281,7 @@ const Form = () => {
                 <option value="5">5</option>
                 <option value="10">10</option>
               </select>
+              <span className={`form-text-error ${isError("demanda")?"is-error-active": ""}`}>Debe escojer un valor</span>
             </div>
             <div className="form__data-item-2 form-btn">
             <Button text="Guardar" />

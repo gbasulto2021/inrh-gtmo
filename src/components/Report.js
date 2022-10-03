@@ -3,7 +3,7 @@ import React from 'react'
 const Report = ({data}) => {
     const {fecha,municipio,mes,year,resultado} =data;
 
-
+  
 
     
   return (

@@ -402,32 +402,49 @@
     margin-top: 30px;
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 250px)) ;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
     gap: 10px;
     width: 100%;  
   }
 
   .form__data-item-2{
-    height: 40px;
+    padding-left: 20px;
+    position:relative;
+    height: 60px;
     min-width: 150px;
-    padding-left: 35px;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content:space-between;
     color:#c2dbec;
     font-weight: bold;
     text-align: end;
     gap:5px;
   }
-
   .form__data-item{
+    position: relative;
+    width: 200px;
+    height: 85px;
     display: flex;
     flex-direction: column;
     align-items: center;
     color:#c2dbec;
     font-weight: bold;
     gap:5px;
+    text-align: center;
   }
+  .form-text-error{
+   opacity: 0;
+   position: absolute;
+   width: 100%;
+   height: 20px;
+   bottom: 10px;
+   right: 0;
+   padding-right: 5px;
+   font-size: 0.8rem;
+   font-weight: normal;
+   color: #f28f8f;
+   }
+
 
   .form__data-item select, .form__data-item-2 select{
     height: 25px;
@@ -466,9 +483,78 @@
     flex-direction: column;
     color: #c2dbec;
   }
+
+  .chart__info{
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
  
-   .reports_list{
+
+  .dashboard__header{
+    margin: 200px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    
+  }
+
+  .dashboard__form{
+    padding: 10px;
+    position: relative;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 250px));
+    gap: 2px;
+    width: 100%;
+  }
+
+  .dashboard__form-item select{
+    height: 25px;
+    outline: none;
+    background: rgba(2, 71, 100, 0.592);
+    color:#c2dbec;
+  }
+ .dashboard__form-item{
+   padding: 5px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:#c2dbec;
+    font-weight: bold;
+    text-align: center;
+ }
+  .dashboard__form .btn{
+    grid-column: 1/4;
+    place-self: center;
+  }
+
+  .dashboard__form-error{
+    opacity: 0;
+    width: 100%;
+    text-align: center;
+    padding: 2px;
+   font-size: 1rem;
+   font-weight: normal;
+   color: #a20606;
+   text-shadow: 0 0 1px #1c2548;
+   background-color:#c2dbec4e;
+  }
+
+  .is-error-active{
+    opacity: 1;
+  }
+   .reports__list{
     background-color: #1c2548;
+    width: 80%;
    }
 
    .dashboard__report{
