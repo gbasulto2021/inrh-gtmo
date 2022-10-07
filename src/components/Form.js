@@ -30,9 +30,6 @@ const Form = () => {
   const [errors, setErrors] = useState(null);
   const navigate = useNavigate();
 
-  // const years = (cb) => {
-  //   return cb();
-  // };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -88,7 +85,7 @@ const Form = () => {
       if(res.ok){
         setMessage(res.statusText)
         setForm(initialState);
-        navigate('/dashboard')
+        navigate('/reports')
       }else{
         setErrors(res.errors)
       }
@@ -102,7 +99,7 @@ const Form = () => {
 
   const isError = (param)=>{
     if(errors){
-      return errors.some(error=> error.param == param)
+      return errors.some(error=> error.param === param)
     }
   }
 

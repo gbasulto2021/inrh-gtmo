@@ -39,8 +39,9 @@
    }
 .header__nav{
     display: flex;
-    justify-content: space-around;
-    width: 60%;
+    justify-content:end;
+    gap: 5px;
+    width: 90%;
 }
 
 
@@ -357,11 +358,10 @@
     letter-spacing: 1px;
     cursor: pointer;
     background-color: #0413499e;
-     width: 100%;
+     width: 200px;
      height: 40px;
      border: none;
      border-radius: 10px;
-     text-align: center;
      color:#c2dbec;
      line-height: 2;
      padding: 3px;
@@ -420,6 +420,8 @@
     text-align: end;
     gap:5px;
   }
+
+
   .form__data-item{
     position: relative;
     width: 200px;
@@ -596,12 +598,9 @@
 
   @media  screen and (min-width: 992px ) {
     .form-btn{
-       grid-column: 1 / span 3;
-       justify-content: center;
-    }
-    .btn{
-      width: 200px;
-    }
+      grid-column: 2 / 4;
+      
+   }
     .form__data{
       margin-top: 100px;
      

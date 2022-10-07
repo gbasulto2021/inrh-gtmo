@@ -5,7 +5,7 @@ import { useNavigate} from "react-router-dom";
 import {years} from "../herpers/years";
 
 
-const Dashboard = () => {
+const Reports = () => {
   const [user, setUser] = useState(null)
   const [reports, setReports] =useState([])
 
@@ -15,17 +15,17 @@ const Dashboard = () => {
   const navigate = useNavigate();
    console.log(reports);
 
-  useEffect(()=>{
+  // useEffect(()=>{
    
-    const loggedUserJson =window.localStorage.getItem("user");
-    if(loggedUserJson){
-      const user = JSON.parse(loggedUserJson)
-      setUser(user)
+  //   const loggedUserJson =window.localStorage.getItem("user");
+  //   if(loggedUserJson){
+  //     const user = JSON.parse(loggedUserJson)
+  //     setUser(user)
             
-    }else{
-      navigate('/login')
-    }
-  },[])
+  //   }else{
+  //     navigate('/login')
+  //   }
+  // },[])
 
     useEffect(()=>{
       const getReports = async()=>{
@@ -124,4 +124,4 @@ const handleYearSubmit = (e)=>{
   )
 }
 
-export default Dashboard
+export default Reports

@@ -18,28 +18,33 @@ const Login = () => {
   const navigate = useNavigate();
 
 const loginUser = async (dataLogin)=>{
-    
+  const controller = new AbortController(); 
   let url = "http://localhost:5500/auth";
       let options = {
         method:'POST',
         mode:'cors',
         body: JSON.stringify(dataLogin),
         headers: { "Content-type": "application/json" },
+        signal:controller.signal
       };
+      
 try {
   setIsLoading(true);
   const response = await fetch(url, options)
   const res = await response.json()
   console.log(res);
   window.localStorage.setItem("user", JSON.stringify(res.data)) 
+  
   setIsLoading(false);
   setMessage(res.statusText);
+  setTimeout(() => controller.abort(), 3000);
   setTimeout(()=>{
     setMessage(null)
-    navigate('/dashboard')
+    navigate('/form')
   },1000)
   
 } catch (error) {
+  setIsLoading(false);
   console.log(error)
 }
   

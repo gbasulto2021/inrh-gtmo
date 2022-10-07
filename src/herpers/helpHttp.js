@@ -4,7 +4,7 @@ export const helpHttp = () => {
       accept: "application/json",
     };
 
-    const controller = new AbortController();
+    const controller= new AbortController();
 
     options.signal = controller.signal;
 

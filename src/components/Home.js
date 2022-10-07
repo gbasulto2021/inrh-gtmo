@@ -10,7 +10,7 @@ const Home = () => {
   <div className="home jumbotron">
         <Nav/>
     <div className="container">  
-      <Link to='/'><h1>SIG<br/>ISH</h1></Link>
+      <Link to='/login'><h1>SIG<br/>ISH</h1></Link>
      </div>
     <div className="rectangle-1"></div>
     <div className="rectangle-2"></div>
