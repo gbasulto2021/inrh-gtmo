@@ -1,6 +1,9 @@
 import React from 'react';
 import { BarChart, Bar, Cell, CartesianGrid, XAxis,YAxis,Tooltip, ResponsiveContainer, Label } from 'recharts';
 
+
+
+
 const fillBars = (el)=>{
     
     if(el <= 2.5){

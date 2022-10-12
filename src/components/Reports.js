@@ -1,47 +1,22 @@
-import React, {useState, useEffect}  from 'react';
+import React, {useState, useEffect, useContext}  from 'react';
 import Nav from "../commons/Nav";
 import Report from './Report';
 import { useNavigate} from "react-router-dom";
 import {years} from "../herpers/years";
-
+import ReportContext from '../context/ReportsContext';
+import Modal from './Modal';
 
 const Reports = () => {
-  const [user, setUser] = useState(null)
-  const [reports, setReports] =useState([])
-
+  // const [reports, setReports] =useState([])
   const [year, setYear] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [error, setError] = useState("");
+  const {reports, getReports, message} = useContext(ReportContext)
   const navigate = useNavigate();
-   console.log(reports);
-
-  // useEffect(()=>{
-   
-  //   const loggedUserJson =window.localStorage.getItem("user");
-  //   if(loggedUserJson){
-  //     const user = JSON.parse(loggedUserJson)
-  //     setUser(user)
-            
-  //   }else{
-  //     navigate('/login')
-  //   }
-  // },[])
+  
 
     useEffect(()=>{
-      const getReports = async()=>{
-
-        try {
-          const response = await fetch("http://localhost:5500/reports");
-          if (!response.ok){
-            throw new Error({status: response.status, statusText: response.statusText})
-          }
-          const data = await response.json()
-          setReports(data)
-        } catch (error) {
-          console.log(error);
-        }
-      }
-
+     
       getReports()
     },[])
 
@@ -62,8 +37,11 @@ const handleYearSubmit = (e)=>{
   return (
 <>
 <Nav/>
+
 <div className='dashboard'>
+<Modal text="Confirme si desea eliminar el reporte"/>
   <div className='dashboard__header'>
+  
     <form onSubmit={handleYearSubmit} className="dashboard__form">
     <div className='dashboard__form-item'>
       <label htmlFor="municipio">Municipio</label>
@@ -104,7 +82,10 @@ const handleYearSubmit = (e)=>{
    </form>
     <span className={`dashboard__form-error ${error ? "is-error-active": ""}`}>{error}</span>
   </div>
+  <p className='message'>{message}</p>
+ 
   <div className='reports__list'>
+ 
       <div className='reports__labels'>
        <p>Año</p>
        <p>Mes</p>

@@ -1,10 +1,13 @@
 
-import React, { useState } from "react";
+import React, { useState,useContext} from "react";
 import Button from "../commons/Button";
 import Nav from "../commons/Nav";
 import Loader from "./Loader";
 import { useNavigate} from "react-router-dom";
 import {years} from "../herpers/years";
+import ReportContext from "../context/ReportsContext";
+
+
 
 const initialState = {
   mes: "",
@@ -22,37 +25,54 @@ const initialState = {
   idUser: "",
 };
 
+// cobertura_forestal
+
+// demanda
+
+// factor_climatico
+
+// factor_geologico
+
+// mes
+
+// municipio
+
+// nivel_aguaSubterranea
+
+// nivel_cauce
+
+
+// volumen
+
+// year
+
+
 // =('Factor B4climatico'!N2*0.16)+('Factor geológico'!N2*0.13)+('Nivel del cauce'!N2*0.13)+('Nivel Aguas Subterráneas'!N2*0.15)+('Volumen de los embalses'!N2*0.17)+('Cobertura forestal'!N2*0.12)+('Demanda disponibilidad'!N2*0.14)
 const Form = () => {
-  const [form, setForm] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [errors, setErrors] = useState(null);
   const navigate = useNavigate();
-
-
+  const {addReport,isLoading, dataToEdit, setDataToEdit,updateReport} =useContext(ReportContext)
+  
+  if(dataToEdit){
+   initialState.coberturaForestal = dataToEdit.cobertura_forestal
+   initialState.mes = dataToEdit.mes
+   initialState.municipio = dataToEdit.municipio
+   initialState.year = dataToEdit.year
+   initialState.factorClimatico = dataToEdit.factor_climatico
+   initialState.factorGeologico = dataToEdit.factor_geologico
+   initialState.nivelCauce = dataToEdit.nivel_cauce
+   initialState.nivelAguaSubTerranea = dataToEdit.nivel_aguaSubterranea
+   initialState.volumen = dataToEdit.volumen
+   initialState.demanda = dataToEdit.demanda
+  }
+  const [form, setForm] = useState(initialState);
+  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const addReport = async (data) => {
-    try {
-      let url = "http://localhost:5500/new-report";
-      let options = {
-        method:"POST",
-        body: JSON.stringify(data),
-        headers: { "Content-type": "application/json" },
-      };
-      setIsLoading(true);
-      const response = await fetch(url,options)
-      const json = await response.json()
-      setIsLoading(false)
-          
-      return json  
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
 
   const calcResult = (data) => {
     let result;
@@ -77,24 +97,50 @@ const Form = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    addReport({
-      ...form,
-      resultado: calcResult(form),
-      idUser: JSON.parse(localStorage.getItem("user")).id_user
-    }).then(res=> {
-      if(res.ok){
+    if(dataToEdit){
+      updateReport({
+        ...form,
+        resultado: calcResult(form),
+        idUser: JSON.parse(localStorage.getItem("user")).id_user})
+        .then(res=> {
+          setMessage(res.statusText)
+          if(res.ok){
+            setForm(initialState);
+            setDataToEdit(null)
+            setTimeout(() => {
+              setMessage(null);
+              navigate('/reports')
+            }, 2000);
+            
+          }else{
+            setErrors(res.errors)
+           
+          }
+        })
+    }else{
+      addReport({
+        ...form,
+        resultado: calcResult(form),
+        idUser: JSON.parse(localStorage.getItem("user")).id_user
+      }).then(res=> {
         setMessage(res.statusText)
-        setForm(initialState);
-        navigate('/reports')
-      }else{
-        setErrors(res.errors)
-      }
-      
-    })
+        if(res.ok){
+          setForm(initialState);
+          setTimeout(() => {
+            setMessage(null);
+            navigate('/reports')
+          }, 2000);
+          
+        }else{
+          setErrors(res.errors)
+         
+        }
+        
+      })
+    }
     
-    setTimeout(() => {
-      setMessage(null);
-    }, 2000);
+    
+  
   };
 
   const isError = (param)=>{
@@ -283,6 +329,7 @@ const Form = () => {
             <div className="form__data-item-2 form-btn">
             <Button text="Guardar" />
             </div>
+            <input type="hidden" data-id="" />
           </div>
           
         </form>
