@@ -27,6 +27,7 @@ const Chart = () => {
             }
             const data = await response.json();
             setReport(data);
+            
             setIsLoading(false)
           } catch (error) {
             console.log(error);
@@ -43,12 +44,8 @@ const Chart = () => {
      
      <div className='chart-container'>
       {isLoading && <Loader/>}
-      <div className='chart__info'>
-        <p>Año: <b>{year}</b></p>
-        <p>Municipio:  <b>{municipio}</b></p>
-      </div>
-      <h2>Valores de ISH</h2>
-      <BarChartComponent data={report}/>
+    
+      <BarChartComponent data={report} year={year} municipio={municipio}/>
       
      </div>
     </div>

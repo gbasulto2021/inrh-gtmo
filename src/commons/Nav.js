@@ -33,7 +33,7 @@ const Nav = () => {
       {location.pathname === "/"
        ? isLogged ? <button onClick={()=>logOut()}>SALIR</button>: <Link to="login">ENTRAR</Link>
        : <>
-       <Link to="/">INICIO</Link>
+       
        <Link to="/reports">REPORTES</Link>
        <Link to="/form">AGREGAR REPORTE</Link>
        {isLogged ? <button onClick={()=>logOut()}>SALIR</button>: <Link to="login">ENTRAR</Link>}

@@ -1,17 +1,17 @@
 import React, {useState, useEffect, useContext}  from 'react';
 import Nav from "../commons/Nav";
-import Report from './Report';
 import { useNavigate} from "react-router-dom";
 import {years} from "../herpers/years";
 import ReportContext from '../context/ReportsContext';
 import Modal from './Modal';
+import ReportsTable from './ReportsTable';
 
 const Reports = () => {
   // const [reports, setReports] =useState([])
   const [year, setYear] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [error, setError] = useState("");
-  const {reports, getReports, message} = useContext(ReportContext)
+  const {getReports, message} = useContext(ReportContext)
   const navigate = useNavigate();
   
 
@@ -84,20 +84,8 @@ const handleYearSubmit = (e)=>{
   </div>
   <p className='message'>{message}</p>
  
-  <div className='reports__list'>
- 
-      <div className='reports__labels'>
-       <p>Año</p>
-       <p>Mes</p>
-       <p>Municipio</p>
-       <p>ISH</p>  
-      </div> 
-     {reports && reports.length > 0
-      ? reports.map(report=> <Report key={report.id_factores} data={report}/>)
-      : <p>"No hay Reportes"</p>}
-     
-  </div>
-     
+
+     <ReportsTable/>
     
 </div>
 </>
