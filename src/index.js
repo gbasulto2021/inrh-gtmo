@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoutes from './components/PrivateRoutes';
 import Reports from './components/Reports';
@@ -18,7 +18,7 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <ReportsProvider>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path='/' element={<App/>}/>
         <Route path="login" element={<Login/>}/>
@@ -31,7 +31,7 @@ root.render(
         </Route>
         <Route path='*' element={<Navigate to="/"/>}/>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
     </ReportsProvider>
     </AuthProvider>
   </React.StrictMode>

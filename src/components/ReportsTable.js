@@ -4,6 +4,7 @@ import ReportTableRow from './ReportTableRow'
 
 const ReportsTable = () => {
     const {reports} = useContext(ReportContext)
+
   return (
     
         <table className='reports__table'>
@@ -21,7 +22,7 @@ const ReportsTable = () => {
             reports.map((report) => <ReportTableRow key={report.id_factores} data={report} />)
           ) : (
             <tr>
-              <td colSpan="3">No hay Reportes</td>
+              <td colSpan="4">No hay Reportes</td>
             </tr>
           )}
             </tbody>

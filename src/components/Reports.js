@@ -6,17 +6,19 @@ import ReportContext from '../context/ReportsContext';
 import Modal from './Modal';
 import ReportsTable from './ReportsTable';
 
+
 const Reports = () => {
   // const [reports, setReports] =useState([])
   const [year, setYear] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [error, setError] = useState("");
   const {getReports, message} = useContext(ReportContext)
+  
   const navigate = useNavigate();
   
 
     useEffect(()=>{
-     
+      
       getReports()
     },[])
 
